@@ -1,0 +1,56 @@
+button {
+  border: none;
+  background: none;
+}
+#side-menu {
+  transition: all 0.5s;
+  overflow-x: hidden;
+  width: 0;
+}
+.closebtn {
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 2.25rem;
+}
+.side-menu-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.side-menu-list button {
+  width: 8rem;
+  width: inherit;
+  margin: 5px;
+  &:hover {
+    background: turquoise;
+  }
+}
+
+section.top .fa-solid:hover {
+  background: beige;
+}
+
+.head-line {
+  margin-top: 1em;
+}
+.head-line svg {
+  width: 430px;
+}
+
+.menus {
+  border-top: 1px solid var(--bs-gray-300);
+  border-bottom: 4px double black;
+}
+
+.menus button {
+  margin: 5px;
+}
+.menus button:hover {
+  background-color: beige;
+}
+.article {border-bottom: 2px solid #000;}
+
+.article .news-img {
+  max-width: 100%;
+  max-height: 250px;
+}
