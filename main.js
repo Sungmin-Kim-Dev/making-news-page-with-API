@@ -23,45 +23,27 @@ const getLatestNews = async () => {
   const response = await fetch(url);
   const data = await response.json();
   newsList = data.articles;
-  console.log('newsList:', newsList);
-  // console.log(newsList[0].url);
-  let resultHTML = '';
-  for (let i = 0; i < 3; i++) {
-    resultHTML += `
+  render();
+  // console.log('newsList:', newsList);
+};
+
+const render = () => {
+  let newsHTML = newsList.map(
+    (news) => `
     <section class="article row row-gap-2 p-3">
       <div class="img-area col-lg-4">
-        <img class="news-img" src="${newsList[i].urlToImage}">
+        <img class="news-img" src="${news.urlToImage}">
       </div>
       <div class="text-area col-lg-8">
-        <h2 class="article-title">${newsList[i].title}</h2>
-        <p class="main-text">${newsList[i].description}</p>
-        <div class="description">${newsList[i].source.name}  ${newsList[i].publishedAt}</div>
+        <h2 class="article-title">${news.title}</h2>
+        <p class="main-text">${news.description}</p>
+        <div class="description">${news.source.name}  ${news.publishedAt}</div>
       </div>
     </section>
-    `;
-  }
-  document.getElementById('main').innerHTML = resultHTML;
+    `
+  );
+  // console.log(newsHTML);
+  document.getElementById('main').innerHTML = newsHTML.join('');
 };
-getLatestNews();
 
-// function render() {
-//   let resultHTML = '';
-//   for (let i = 0; i < 3; i++) {
-//     resultHTML += `
-//     <section class="article row row-gap-2 p-3">
-//     <a href=${newsList[i].url}>
-//       <div class="img-area col-lg-4">
-//         <img class="news-img" src="${newsList[i].urlToImage}">
-//       </div>
-//       <div class="text-area col-lg-8">
-//         <h2 class="article-title">${newsList[i].title}</h2>
-//         <p class="main-text">${newsList[i].description}</p>
-//         <div class="description">${newsList[i].source.name}  ${newsList[i].publishedAt}</div>
-//       </div>
-//     </a>
-//     </section>
-//     `;
-//   }
-//   document.getElementById('main').innerHTML = resultHTML;
-// }
-// render();
+getLatestNews();
