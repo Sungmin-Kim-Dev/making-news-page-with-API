@@ -24,24 +24,37 @@ const getLatestNews = async () => {
   const data = await response.json();
   newsList = data.articles;
   render();
-  // console.log('newsList:', newsList);
+  console.log('newsList:', newsList);
 };
 
 const render = () => {
-  let newsHTML = newsList.map(
-    (news) => `
+  moment.locale();
+  let newsHTML = newsList.map((news) => {
+    // 삭제된 기사 표시하지 않기
+    if (news.title == '[Removed]') {
+      return '';
+    } else {
+      return `
     <section class="article row row-gap-2 p-3">
-      <div class="img-area col-lg-4">
-        <img class="news-img" src="${news.urlToImage}">
+      <div class="img-area text-center col-lg-4">
+        <img class="news-img" src="${news.urlToImage || 'no_image.jpg'}">
       </div>
       <div class="text-area col-lg-8">
         <h2 class="article-title">${news.title}</h2>
-        <p class="main-text">${news.description}</p>
-        <div class="description">${news.source.name}  ${news.publishedAt}</div>
+        <p class="main-text">${
+          news.description == null || news.description == ''
+            ? '내용 없음'
+            : news.description.length > 150
+            ? news.description.substring(0, 150) + '...'
+            : news.description
+        }</p>
+        <div class="description">${news.source.name || 'no source'} | 
+        ${moment(news.publishedAt).locale('ko').fromNow()}</div>
       </div>
     </section>
-    `
-  );
+    `;
+    }
+  });
   // console.log(newsHTML);
   document.getElementById('main').innerHTML = newsHTML.join('');
 };
