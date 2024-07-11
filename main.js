@@ -37,7 +37,7 @@ const render = () => {
       return `
     <section class="article row row-gap-2 p-3">
       <div class="img-area text-center col-lg-4">
-        <img class="news-img" src="${news.urlToImage || 'no_image.jpg'}">
+        <img class="news-img" src="${news.urlToImage ? news.urlToImage : 'no_image.jpg'}" onerror="this.onerror=null; this.src='no_image.jpg';">
       </div>
       <div class="text-area col-lg-8">
         <h2 class="article-title">${news.title}</h2>
