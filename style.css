@@ -20,6 +20,8 @@ button {
   width: 8rem;
   width: inherit;
   margin: 5px;
+  padding: 0.7rem;
+  border-radius: 5px;
   &:hover {
     background: turquoise;
   }
