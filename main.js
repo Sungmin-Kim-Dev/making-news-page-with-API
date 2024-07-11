@@ -1,14 +1,33 @@
 const API_KEY = `8ca041837c814015be2990bcade21399`;
 
-const searchBtn = document.querySelector('.fa-magnifying-glass');
+const searchBox = document.querySelector('.fa-magnifying-glass');
+const searchInput = document.getElementById('search-input');
 
 let newsList = [];
+const menus = document.querySelectorAll(`.menus button`);
 
-searchBtn.addEventListener('click', searchInput);
+menus.forEach((menu) => menu.addEventListener('click', (event) => getNewsByCategory(event)));
 
-function searchInput() {
+const sideMenu = document.querySelectorAll(`.side-menu-list button`);
+
+sideMenu.forEach((menu) => menu.addEventListener('click', (event) => getNewsByCategory(event)));
+
+searchBox.addEventListener('click', searchBoxToggle);
+
+function searchBoxToggle() {
   document.getElementById('input-area').classList.toggle('d-none');
+  searchInput.focus();
 }
+
+
+// Enter 키로 입력
+searchInput.addEventListener('keydown', function (event) {
+  // .keycode is deprecated.
+  if (event.key === 'Enter') {
+    searchKeyword(event);
+  }
+});
+
 function openSide() {
   document.getElementById('side-menu').style.width = '250px';
 }
@@ -18,13 +37,41 @@ function closeSide() {
 
 const getLatestNews = async () => {
   // const url = new URL(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`);
-  const url = new URL(`https://frabjous-medovik-94ad71.netlify.app/top-headlines`);
+  const url = new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines`);
   console.log('url:', url);
   const response = await fetch(url);
   const data = await response.json();
   newsList = data.articles;
   render();
   console.log('newsList:', newsList);
+};
+
+const getNewsByCategory = async (event) => {
+  const category = event.target.textContent.toLowerCase();
+  console.log(category);
+  // const url = new URL(`https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`);
+  const url = new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?category=${category}`);
+  const response = await fetch(url);
+  const data = await response.json();
+  newsList = data.articles;
+  console.log('Data:', data);
+  render();
+};
+
+const searchKeyword = async (event) => {
+  if (searchInput.value == false) {
+    return;
+  }
+  let keyword = searchInput.value;
+  // const url = new URL(`https://newsapi.org/v2/top-headlines?country=us&q=${keyword}&apiKey=${API_KEY}`);
+  const url = new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?q=${keyword}`);
+  const response = await fetch(url);
+  const data = await response.json();
+  newsList = data.articles;
+  console.log('Data:', data);
+  render();
+
+  searchInput.value = '';
 };
 
 const render = () => {

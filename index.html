@@ -13,24 +13,16 @@
 </head>
 
 <body>
-  <div id="side-menu" class="position-fixed top-0 bg-success-subtle h-100 pt-3 overflow-x-hidden">
+  <div id="side-menu" class="position-fixed top-0 bg-success-subtle h-100 pt-3 overflow-x-hidden d-md-none">
     <button class="closebtn position-absolute" onclick="closeSide()">×</button>
     <div class="side-menu-list mt-5">
-      <button>Sports</button>
-      <button>Tech</button>
-      <button>World</button>
-      <button>Finance</button>
-      <button>Politics</button>
+      <button>General</button>
       <button>Business</button>
-      <button>Economics</button>
+      <button>Technology</button>
       <button>Entertainment</button>
-      <button>Beauty</button>
-      <button>Travel</button>
-      <button>Music</button>
-      <button>Food</button>
+      <button>Health</button>
       <button>Science</button>
-      <button>Gaming</button>
-      <button>Energy</button>
+      <button>Sports</button>
     </div> <!-- .side-menu-list -->
   </div> <!-- .side-menu -->
   <div class="container">
@@ -42,9 +34,9 @@
         <div class="search-area d-flex gap-2">
           <i class="fa-solid fa-magnifying-glass p-2"></i>
           <div id="input-area" class="d-flex d-none">
-            <!-- 돋보기 클릭하면 클래스 이름 d-flex -->
+            <!-- 돋보기 클릭하면 클래스 d-none toggle -->
             <input type="text" id="search-input" placeholder="search">
-            <button class="search-button btn btn-success btn-sm ms-2">Go</button>
+            <button class="search-button btn btn-success btn-sm ms-2" onclick="searchKeyword()">Go</button>
           </div>
         </div>
       </section>
@@ -56,25 +48,13 @@
         </svg>
       </section>
       <nav class="menus justify-content-center flex-wrap gap-lg-2 d-none d-md-flex">
-        <div class="menu1 d-flex gap-lg-2">
-          <button>Sports</button>
-          <button>Tech</button>
-          <button>World</button>
-          <button>Finance</button>
-          <button>Politics</button>
-          <button>Business</button>
-          <button>Economics</button>
-          <button>Entertainment</button>
-        </div>
-        <div class="menu2 d-flex gap-lg-2">
-          <button>Beauty</button>
-          <button>Travel</button>
-          <button>Music</button>
-          <button>Food</button>
-          <button>Science</button>
-          <button>Gaming</button>
-          <button>Energy</button>
-        </div>
+        <button>General</button>
+        <button>Business</button>
+        <button>Technology</button>
+        <button>Entertainment</button>
+        <button>Health</button>
+        <button>Science</button>
+        <button>Sports</button>
       </nav>
     </header>
     <main id="main">
