@@ -46,10 +46,13 @@ section.top .fa-solid:hover {
 .menus button {
   margin: 5px;
 }
-.menus button:hover {
+.menus button:hover,
+.menus button.selected {
   background-color: beige;
 }
-.article {border-bottom: 2px solid #000;}
+.article {
+  border-bottom: 2px solid #000;
+}
 
 .article .news-img {
   max-width: 100%;
