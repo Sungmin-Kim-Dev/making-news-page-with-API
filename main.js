@@ -47,8 +47,8 @@ const getNews = async () => {
     const response = await fetch(url);
     const data = await response.json();
     if (response.status === 200) {
-      if(data.articles.length === 0){
-        throw new Error("No matches for your search.")
+      if (data.articles.length === 0) {
+        throw new Error('No matches for your search.');
       }
       newsList = data.articles;
       render();
@@ -67,11 +67,11 @@ const getLatestNews = async () => {
 };
 
 const getNewsByCategory = async (event) => {
-  const category = event.target.textContent;
+  const category = event.target.textContent.toLowerCase();
   if (runningURL === myURL) {
-    url = new URL(runningURL + `&category=${category.toLowerCase()}`);
+    url = new URL(runningURL + `&category=${category}`);
   } else {
-    url = new URL(runningURL + `?category=${category.toLowerCase()}`);
+    url = new URL(runningURL + `?category=${category}`);
   }
   await getNews();
 };
