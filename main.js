@@ -124,7 +124,7 @@ const render = () => {
               : news.description
           }</p>
           <div class="description">${news.source.name || 'no source'} | 
-          ${moment(news.publishedAt).locale('ko').fromNow()}</div>
+          ${moment(news.publishedAt).fromNow()}</div>
         </div>
       </section>
       `;
@@ -152,14 +152,22 @@ const paginationRender = () => {
   // lastPage
   let lastPage = pageGroup * groupSize;
   // firstPage
-  let firstPage = lastPage - (groupSize - 1);
   if (lastPage > totalPages) {
     lastPage = totalPages;
   }
+  let firstPage = lastPage - (groupSize - 1);
+  if (firstPage <= 0) {
+    firstPage = 1;
+  }
 
+  // 표시 여부에 관계없이 페이지네이션 위치를 고정하기 위해
+  // display: none 대신 visibility: hidden 사용
   let paginationHTML = `
-  <li class="page-item page-prev ${page === 1 ? 'disabled' : ''}">
-    <a class="page-link" href="#">Previous</a>
+  <li class="page-item page-prev ${page === 1 ? 'invisible' : ''}" onclick='moveToPage(1)'>
+    <a class="page-link" href="#">&lt&lt</a>
+  </li>
+  <li class="page-item page-prev ${page === 1 ? 'invisible' : ''}" onclick='moveToPage(${page - 1})'>
+    <a class="page-link" href="#">&lt</a>
   </li>
   `;
   for (let i = firstPage; i <= lastPage; i++) {
@@ -170,8 +178,11 @@ const paginationRender = () => {
     `;
   }
   paginationHTML += `
-  <li class="page-item page-next ${page === totalPages ? 'disabled' : ''}">
-    <a class="page-link" href="#">Next</a>
+  <li class="page-item page-next ${page === totalPages ? 'invisible' : ''}" onclick='moveToPage(${page + 1})'>
+    <a class="page-link" href="#">&gt</a>
+  </li>
+  <li class="page-item page-next ${page === totalPages ? 'invisible' : ''}" onclick='moveToPage(${totalPages})'>
+    <a class="page-link" href="#">&gt&gt</a>
   </li>
   `;
 
