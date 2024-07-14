@@ -4,7 +4,7 @@ const noonaURL = `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headline
 
 // API 교체를 쉽게 하기 위하여 지정
 // let runningURL = myURL;
-let runningURL = noonaURL;
+let runningURL = myURL;
 
 let url = new URL(runningURL);
 
@@ -42,16 +42,27 @@ function closeSide() {
   document.getElementById('side-menu').style.width = '0px';
 }
 
+let totalResults = 0;
+let page = 1;
+const pageSize = 10;
+const groupSize = 5;
+
 const getNews = async () => {
   try {
+    url.searchParams.set('page', page); // &page=1
+    url.searchParams.set('pageSize', pageSize); // &pageSize=10
     const response = await fetch(url);
     const data = await response.json();
+    console.log(data);
     if (response.status === 200) {
       if (data.articles.length === 0) {
         throw new Error('No matches for your search.');
       }
       newsList = data.articles;
+      totalResults = data.totalResults;
+      console.log(newsList);
       render();
+      paginationRender();
     } else {
       throw new Error(data.message);
     }
@@ -73,6 +84,7 @@ const getNewsByCategory = async (event) => {
   } else {
     url = new URL(runningURL + `?category=${category}`);
   }
+  page = 1;
   await getNews();
 };
 
@@ -86,6 +98,7 @@ const searchKeyword = async (event) => {
   } else {
     url = new URL(runningURL + `?q=${keyword}`);
   }
+  page = 1;
   await getNews();
   searchInput.value = '';
 };
@@ -125,6 +138,50 @@ const errorRender = (errorMessage) => {
         ${errorMessage}
       </div>`;
   document.getElementById('main').innerHTML = errorHTML;
+};
+
+const paginationRender = () => {
+  // totalResults
+  // page
+  // pageSize
+  // groupSize
+  // totalPages
+  const totalPages = Math.ceil(totalResults / pageSize);
+  // pageGroup
+  const pageGroup = Math.ceil(page / groupSize);
+  // lastPage
+  let lastPage = pageGroup * groupSize;
+  // firstPage
+  let firstPage = lastPage - (groupSize - 1);
+  if (lastPage > totalPages) {
+    lastPage = totalPages;
+  }
+
+  let paginationHTML = `
+  <li class="page-item page-prev ${page === 1 ? 'disabled' : ''}">
+    <a class="page-link" href="#">Previous</a>
+  </li>
+  `;
+  for (let i = firstPage; i <= lastPage; i++) {
+    paginationHTML += `
+    <li class="page-item ${i === page ? 'active' : ''}" onclick='moveToPage(${i})'>
+      <a class="page-link" href="#">${i}</a>
+    </li>
+    `;
+  }
+  paginationHTML += `
+  <li class="page-item page-next ${page === totalPages ? 'disabled' : ''}">
+    <a class="page-link" href="#">Next</a>
+  </li>
+  `;
+
+  document.querySelector('.pagination').innerHTML = paginationHTML;
+};
+
+const moveToPage = (pageNumber) => {
+  console.log('move to page', pageNumber);
+  page = pageNumber;
+  getNews();
 };
 
 getLatestNews();
