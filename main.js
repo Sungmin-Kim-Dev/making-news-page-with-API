@@ -4,7 +4,7 @@ const noonaURL = `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headline
 
 // API 교체를 쉽게 하기 위하여 지정
 // let runningURL = myURL;
-let runningURL = myURL;
+let runningURL = noonaURL;
 
 let url = new URL(runningURL);
 
